@@ -25,7 +25,7 @@ cmake_minimum_required(VERSION 3.15)
 project(flyBird)
 
 #the project contains an executable named flyBird that uses the following cpp files
-add_executable(flyBird src/helloSFML.cpp)
+add_executable(flyBird src/birdPipes.cpp)
 
 #create a folder named "cmake" at the top of your project and put the
 #findSFML.cmake file in it.  This line tells Cmake to look there for

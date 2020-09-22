@@ -20,13 +20,13 @@ int main()
         // clear the window with black color
         window.clear(sf::Color::Black);
 
-    sf::CircleShape octagon(80.f, 8);
+    sf::CircleShape circle(10.f);
 
 // set the shape color to blue
-octagon.setFillColor(sf::Color(6,72,120));
-octagon.setOutlineThickness(10.f);
-octagon.setPosition(320.f, 220.f);
- window.draw(octagon);
+circle.setFillColor(sf::Color(255,0,0));
+//circle.setOutlineThickness(10.f);
+        circle.setPosition(390.f, 290.f);
+window.draw(circle);
     // end the current frame
         window.display();
     }
