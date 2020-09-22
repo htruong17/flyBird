@@ -1,0 +1,8 @@
+Fly Bird Fly
+
+1. What class will you need to create? We will create 2 classes are: bird and pipes.\
+2. What methods will they need? The bird needs the method to fly up.\
+3. What data will they need to store? The data they need to store are their coordinates, and pipes count.\
+4. In what order will you implement them? We will create class for the bird and add movement via methods. Then, generating pipes and the movement of the pipes from right to left. When the bird hits the pipe, the bird dies.\
+5. What tests will you write along the way to verify that you are making progress? We write the test to check when the coordinates of the bird equal to the coordinates of the pipe, the game ends.\
+}
