@@ -14,11 +14,15 @@
 class myBird{
     
 public:
+    float posX;
     float posY;
-    myBird(float y);
+    float velocity;
+    
+    myBird(float x, float y);
     
     // Declare method to move bird vertically
-    void move(const float y);
+    void moveY(const float& accel);
+    void jump(const float& speed);
 };
 
 #endif /* birdClass_hpp */

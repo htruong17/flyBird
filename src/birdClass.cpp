@@ -7,10 +7,18 @@
 
 #include "birdClass.hpp"
 
-myBird::myBird(float y){
+myBird::myBird(float x, float y){
+    posX = x;
     posY = y;
+    velocity = 0;
 }
 
-void myBird::move(const float y){
-    posY += y;
+void myBird::jump(const float& speed){
+    velocity = speed;
 }
+void myBird::moveY(const float& accel){
+    velocity += accel;
+    posY += velocity;
+}
+
+

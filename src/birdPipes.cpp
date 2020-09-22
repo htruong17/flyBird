@@ -6,7 +6,11 @@ int main()
 {
     
     // Create Bird Constructor
-    myBird bird(180.f);
+    myBird bird(390.f, 180.f);
+    bool collision = true;
+    bool pause = false;
+    sf::CircleShape circle(10.f);
+    sf::RectangleShape rectangle(sf::Vector2f(120,50));
     
     // create the window
     sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
@@ -27,31 +31,50 @@ int main()
                 //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                 {
                     cout << "Up" << endl;
-                    bird.move(-10);
+                    bird.jump(-.3);
                 }
-                else if (event.key.code == sf::Keyboard::Down){
-                    bird.move(10);
+                else if (event.key.code == sf::Keyboard::Space){
+                cout << "Pause" << endl;
+                    pause = !pause;
                 }
             }
+            
         }
 
         // clear the window with black color
         window.clear(sf::Color::Black);
 
-        
-    sf::CircleShape circle(10.f);
+    
 
 // set the shape color to blue
 circle.setFillColor(sf::Color(255,0,0));
+        if (collision){
+            rectangle.setFillColor(sf::Color(255,255,0));
+        } else {
+            rectangle.setFillColor(sf::Color(70,130,180));
+        }
 //circle.setOutlineThickness(10.f);
-        circle.setPosition(390.f, bird.posY);
-window.draw(circle);
+        circle.setPosition(bird.posX, bird.posY);
+        rectangle.setPosition(400.f, 190.f);
+
+        window.draw(rectangle);
+        window.draw(circle);
         
     // end the current frame
         window.display();
     
+        if(circle.getGlobalBounds().intersects(rectangle.getGlobalBounds())){
+                collision = true;
+            } else {
+                collision = false;
+            }
+        if(!pause){
+            bird.moveY(0.0005);
+            
+        }
     }
    
-    
+        
+   
     return 0;
 }
