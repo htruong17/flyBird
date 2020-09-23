@@ -18,7 +18,7 @@ public:
     sf::RectangleShape recTOP;
     sf::RectangleShape recBOT;
     
-    myPipe(float x, float y);
+    myPipe(float x);
     
     // Declare method to move pip horizontally
     void create();

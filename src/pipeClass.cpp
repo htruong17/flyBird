@@ -7,10 +7,10 @@
 #include <SFML/Graphics.hpp>
 #include "pipeClass.hpp"
 
-myPipe::myPipe(float x, float y){
-    
+// Pip constructor
+myPipe::myPipe(float x){
     posX = x;
-    posY = y;
+    posY = -(rand()%300) - 50;
 }
 
 void myPipe::create(){
