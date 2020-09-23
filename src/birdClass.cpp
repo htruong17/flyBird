@@ -28,4 +28,7 @@ void myBird::moveY(const float& accel){ // Drop or Gravity
     }
 }
 
+void myBird::MoveX(const float& v){
+    posX += v;
+}
 

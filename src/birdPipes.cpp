@@ -10,8 +10,10 @@ int main()
     bool collision = true;
     bool pause = false;
     sf::CircleShape circle(10.f);
-    sf::RectangleShape rectangle(sf::Vector2f(50,400));
+    sf::RectangleShape rectangle1(sf::Vector2f(50,400));
     sf::RectangleShape rectangle2(sf::Vector2f(50,400));
+    sf::RectangleShape rectangle3(sf::Vector2f(50,400));
+    sf::RectangleShape rectangle4(sf::Vector2f(50,400));
     
     // create the window
     sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
@@ -50,31 +52,34 @@ int main()
 // set the shape color to blue
 circle.setFillColor(sf::Color(255,0,0));
         if (collision){
-            rectangle.setFillColor(sf::Color(255,255,0));
+            rectangle1.setFillColor(sf::Color(255,255,0));
         } else {
-            rectangle.setFillColor(sf::Color(70,130,180));
+            rectangle1.setFillColor(sf::Color(70,130,180));
         }
 //circle.setOutlineThickness(10.f);
-        circle.setPosition(bird.posX, bird.posY);
-        rectangle.setPosition(400.f, 500.f);
-        rectangle2.setPosition(400.f, 0.f);
-
+        circle.setPosition(390.f, bird.posY);
+        rectangle1.setPosition(10 + bird.posX, 500.f);
+        rectangle2.setPosition(10 + bird.posX, -100.f);
+        rectangle3.setPosition(310.f + bird.posX, 300.f);
+        rectangle4.setPosition(310.f + bird.posX, -300.f);
         
-        window.draw(rectangle);
+        window.draw(rectangle1);
         window.draw(rectangle2);
+        window.draw(rectangle3);
+        window.draw(rectangle4);
         window.draw(circle);
         
     // end the current frame
         window.display();
     
-        if(circle.getGlobalBounds().intersects(rectangle.getGlobalBounds())){
+        if(circle.getGlobalBounds().intersects(rectangle1.getGlobalBounds())){
                 collision = true;
             } else {
                 collision = false;
             }
         if(!pause){
             bird.moveY(-0.0008); //Update circle position
-            
+            bird.MoveX(-0.19);
         }
     }
    

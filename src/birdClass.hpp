@@ -23,6 +23,9 @@ public:
     // Declare method to move bird vertically
     void moveY(const float& accel);
     void jump(const float& speed);
+    
+
+    void MoveX(const float& accel);
 };
 
 #endif /* birdClass_hpp */
