@@ -10,7 +10,8 @@ int main()
     bool collision = true;
     bool pause = false;
     sf::CircleShape circle(10.f);
-    sf::RectangleShape rectangle(sf::Vector2f(120,50));
+    sf::RectangleShape rectangle(sf::Vector2f(50,400));
+    sf::RectangleShape rectangle2(sf::Vector2f(50,400));
     
     // create the window
     sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
@@ -31,7 +32,7 @@ int main()
                 //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                 {
                     cout << "Up" << endl;
-                    bird.jump(-.3);
+                    bird.jump(.45);
                 }
                 else if (event.key.code == sf::Keyboard::Space){
                 cout << "Pause" << endl;
@@ -55,9 +56,12 @@ circle.setFillColor(sf::Color(255,0,0));
         }
 //circle.setOutlineThickness(10.f);
         circle.setPosition(bird.posX, bird.posY);
-        rectangle.setPosition(400.f, 190.f);
+        rectangle.setPosition(400.f, 500.f);
+        rectangle2.setPosition(400.f, 0.f);
 
+        
         window.draw(rectangle);
+        window.draw(rectangle2);
         window.draw(circle);
         
     // end the current frame
@@ -69,7 +73,7 @@ circle.setFillColor(sf::Color(255,0,0));
                 collision = false;
             }
         if(!pause){
-            bird.moveY(0.0005);
+            bird.moveY(-0.0008); //Update circle position
             
         }
     }

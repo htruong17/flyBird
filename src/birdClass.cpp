@@ -14,11 +14,18 @@ myBird::myBird(float x, float y){
 }
 
 void myBird::jump(const float& speed){
-    velocity = speed;
+    velocity = -speed;
 }
-void myBird::moveY(const float& accel){
-    velocity += accel;
+void myBird::moveY(const float& accel){ // Drop or Gravity
+    velocity -= accel;
     posY += velocity;
+    if (posY > 580){
+        posY = 580;
+        velocity = 0;
+    } else if (posY < 0){
+        posY = 0;
+        velocity = 0;
+    }
 }
 
 
