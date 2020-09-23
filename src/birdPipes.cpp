@@ -62,7 +62,7 @@ circle.setFillColor(sf::Color(255,0,0));
 //        }
 //circle.setOutlineThickness(10.f);
         circle.setPosition(390.f, bird.posY);
-    
+        pipe.position();
         rectangle2top.setPosition(300.f, 300.f);
         rectangle2bot.setPosition(300.f, -300.f);
         rectangle3top.setPosition(550.f, 400.f);
@@ -84,7 +84,7 @@ circle.setFillColor(sf::Color(255,0,0));
 //            }
         if(!pause){
             bird.moveY(-0.0008); //Update circle position
-            //pipe.move(-.05);
+            pipe.move(-.3);
             //bird.MoveX(-0.18);
         }
     }

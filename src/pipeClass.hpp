@@ -13,15 +13,16 @@
 class myPipe{
     
 public:
-    int posX;
-    int posY;
+    float posX;
+    float posY;
     sf::RectangleShape recTOP;
     sf::RectangleShape recBOT;
     
-    myPipe(int x, int y);
+    myPipe(float x, float y);
     
     // Declare method to move pip horizontally
     void create();
+    void position();
     void move(const float& accel);
     void Draw(sf::RenderWindow& window);
     
