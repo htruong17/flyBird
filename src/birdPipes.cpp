@@ -10,10 +10,12 @@ int main()
     bool collision = true;
     bool pause = false;
     sf::CircleShape circle(10.f);
-    sf::RectangleShape rectangle1(sf::Vector2f(50,400));
-    sf::RectangleShape rectangle2(sf::Vector2f(50,400));
-    sf::RectangleShape rectangle3(sf::Vector2f(50,400));
-    sf::RectangleShape rectangle4(sf::Vector2f(50,400));
+    sf::RectangleShape rectangle1top(sf::Vector2f(50,400));
+    sf::RectangleShape rectangle1bot(sf::Vector2f(50,400));
+    sf::RectangleShape rectangle2top(sf::Vector2f(50,400));
+    sf::RectangleShape rectangle2bot(sf::Vector2f(50,400));
+    sf::RectangleShape rectangle3top(sf::Vector2f(50,400));
+    sf::RectangleShape rectangle3bot(sf::Vector2f(50,400));
     
     // create the window
     sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
@@ -52,34 +54,38 @@ int main()
 // set the shape color to blue
 circle.setFillColor(sf::Color(255,0,0));
         if (collision){
-            rectangle1.setFillColor(sf::Color(255,255,0));
+            rectangle1top.setFillColor(sf::Color(255,255,0));
         } else {
-            rectangle1.setFillColor(sf::Color(70,130,180));
+            rectangle1top.setFillColor(sf::Color(70,130,180));
         }
 //circle.setOutlineThickness(10.f);
         circle.setPosition(390.f, bird.posY);
-        rectangle1.setPosition(10 + bird.posX, 500.f);
-        rectangle2.setPosition(10 + bird.posX, -100.f);
-        rectangle3.setPosition(310.f + bird.posX, 300.f);
-        rectangle4.setPosition(310.f + bird.posX, -300.f);
+        rectangle1top.setPosition(0 + bird.posX, 500.f);
+        rectangle1bot.setPosition(0 + bird.posX, -100.f);
+        rectangle2top.setPosition(300.f + bird.posX, 300.f);
+        rectangle2bot.setPosition(300.f + bird.posX, -300.f);
+        rectangle3top.setPosition(550.f + bird.posX, 400.f);
+        rectangle3bot.setPosition(550.f + bird.posX, -200.f);
         
-        window.draw(rectangle1);
-        window.draw(rectangle2);
-        window.draw(rectangle3);
-        window.draw(rectangle4);
+        window.draw(rectangle1top);
+        window.draw(rectangle1bot);
+        window.draw(rectangle2top);
+        window.draw(rectangle2bot);
+        window.draw(rectangle3top);
+        window.draw(rectangle3bot);
         window.draw(circle);
         
     // end the current frame
         window.display();
     
-        if(circle.getGlobalBounds().intersects(rectangle1.getGlobalBounds())){
+        if(circle.getGlobalBounds().intersects(rectangle1top.getGlobalBounds())){
                 collision = true;
             } else {
                 collision = false;
             }
         if(!pause){
             bird.moveY(-0.0008); //Update circle position
-            bird.MoveX(-0.19);
+            bird.MoveX(-0.18);
         }
     }
    
