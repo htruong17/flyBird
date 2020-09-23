@@ -1,17 +1,19 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "birdClass.hpp"
+#include "pipeClass.hpp"
 using namespace std;
 int main()
 {
     
     // Create Bird Constructor
     myBird bird(390.f, 180.f);
+    myPipe pipe(400.f,-100.f);
+    
     bool collision = true;
     bool pause = false;
     sf::CircleShape circle(10.f);
-    sf::RectangleShape rectangle1top(sf::Vector2f(50,400));
-    sf::RectangleShape rectangle1bot(sf::Vector2f(50,400));
+    pipe.create();
     sf::RectangleShape rectangle2top(sf::Vector2f(50,400));
     sf::RectangleShape rectangle2bot(sf::Vector2f(50,400));
     sf::RectangleShape rectangle3top(sf::Vector2f(50,400));
@@ -53,39 +55,37 @@ int main()
 
 // set the shape color to blue
 circle.setFillColor(sf::Color(255,0,0));
-        if (collision){
-            rectangle1top.setFillColor(sf::Color(255,255,0));
-        } else {
-            rectangle1top.setFillColor(sf::Color(70,130,180));
-        }
+//        if (collision){
+//            rectangle1top.setFillColor(sf::Color(255,255,0));
+//        } else {
+//            rectangle1top.setFillColor(sf::Color(70,130,180));
+//        }
 //circle.setOutlineThickness(10.f);
         circle.setPosition(390.f, bird.posY);
-        rectangle1top.setPosition(0 + bird.posX, 500.f);
-        rectangle1bot.setPosition(0 + bird.posX, -100.f);
-        rectangle2top.setPosition(300.f + bird.posX, 300.f);
-        rectangle2bot.setPosition(300.f + bird.posX, -300.f);
-        rectangle3top.setPosition(550.f + bird.posX, 400.f);
-        rectangle3bot.setPosition(550.f + bird.posX, -200.f);
-        
-        window.draw(rectangle1top);
-        window.draw(rectangle1bot);
+    
+        rectangle2top.setPosition(300.f, 300.f);
+        rectangle2bot.setPosition(300.f, -300.f);
+        rectangle3top.setPosition(550.f, 400.f);
+        rectangle3bot.setPosition(550.f, -200.f);
+        pipe.Draw(window);
         window.draw(rectangle2top);
         window.draw(rectangle2bot);
         window.draw(rectangle3top);
         window.draw(rectangle3bot);
         window.draw(circle);
-        
+    
     // end the current frame
         window.display();
     
-        if(circle.getGlobalBounds().intersects(rectangle1top.getGlobalBounds())){
-                collision = true;
-            } else {
-                collision = false;
-            }
+//        if(circle.getGlobalBounds().intersects(rectangle1top.getGlobalBounds())){
+//                collision = true;
+//            } else {
+//                collision = false;
+//            }
         if(!pause){
             bird.moveY(-0.0008); //Update circle position
-            bird.MoveX(-0.18);
+            //pipe.move(-.05);
+            //bird.MoveX(-0.18);
         }
     }
    
