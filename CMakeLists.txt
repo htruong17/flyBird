@@ -6,8 +6,8 @@
 #mkdir xcode
 #cd xcode
 #cmake -G Xcode .. #tells cmake to make an XCode project, and that the CMakelists.txt file is in the directory above
-#you can then open the asteroids.xcodeproj file with xcode
-#in product -> scheme, select asteroids to run that executable when you press
+#you can then open the flyBird.xcodeproj file with xcode
+#in product -> scheme, select flyBird to run that executable when you press
 #the play button
 
 # to use make, I do something like
@@ -15,7 +15,7 @@
 #cd build
 #cmake .. #by default it creates a makefile for you
 #make #calls the make command which looks in Makefile to see what to do
-#./asteroids  #run the resulting file
+#./flyBird  #run the resulting file
 
 
 #use a recent version of CMake
@@ -38,8 +38,12 @@ add_executable(flyBird src/birdPipes.cpp src/birdClass.cpp src/pipeClass.cpp)
 #used below
 find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
 
-#tells Cmake that the asteroids executable needs to be linked with SFML
+#tells Cmake that the flyBird executable needs to be linked with SFML
 target_link_libraries(flyBird sfml-graphics sfml-audio)
 
 #passes an option to clang when compiling to use recent c++ stuff
 target_compile_options(flyBird PUBLIC -std=c++17)
+
+set_target_properties(flyBird PROPERTIES
+  XCODE_GENERATE_SCHEME TRUE
+  XCODE_SCHEME_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src")
