@@ -15,7 +15,7 @@ int main()
     bool start = false;
     
     int index = 0;
-    // Create Bird Constructor
+    //Create Bird Constructor
     vector<myPipe> myPipes;
     myPipes.push_back(myPipe(2100.f));
     myPipes.push_back(myPipe(2900.f));
@@ -26,13 +26,14 @@ int main()
     
     sf::CircleShape circle(40.f);
     
-    //random select background and sound
+    //Random select background and sound
     string randomBG = to_string(rand()%3 +1) + ".png";
     string randomS = to_string(rand()%3 +1) + ".wav";
-    //cout << randomBG << endl;
     
-    // create the window
+    //Create the window
     sf::RenderWindow window(sf::VideoMode(1600, 1200), "SFML Playground");
+    window.setFramerateLimit(60);
+    window.setKeyRepeatEnabled(false);
     
     //Create background
     sf::Texture bgTex;
@@ -52,29 +53,30 @@ int main()
     int score = 0;
     sf::Font font;
     font.loadFromFile("arial.ttf");
-    sf::Text text;
-    text.setFont(font);
-    text.setCharacterSize(100);
-    text.setFillColor(sf::Color::Red);
-    text.setStyle(sf::Text::Bold);
-    text.setPosition(760.f, 400.f);
+    sf::Text text1, text2;
+    text1.setFont(font);
+    text1.setCharacterSize(100);
+    text1.setFillColor(sf::Color::White);
+    text1.setStyle(sf::Text::Bold);
+    text1.setPosition(760.f, 100.f);
     
-     
-    // create the window
-    //sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Playground");
-  
-    window.setFramerateLimit(60);
-    window.setKeyRepeatEnabled(false);
+    text2.setFont(font);
+    text2.setString("GAME OVER");
+    text2.setCharacterSize(100);
+    text2.setFillColor(sf::Color::Yellow);
+    text2.setOutlineColor(sf::Color::Black);
+    text2.setOutlineThickness(5);
+    text2.setStyle(sf::Text::Bold);
+    text2.setPosition(500.f, 400.f);
     
-    
-    // run the program as long as the window is open
+    //Run the program as long as the window is open
     while (window.isOpen())
     {
-        // check all the window's events that were triggered since the last iteration of the loop
+        //Check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
         while (window.pollEvent(event))
         {
-            // "close requested" event: we close the window
+            //"close requested" event: we close the window
             if (event.type == sf::Event::Closed)
                 window.close();
             else if(event.type == sf::Event::KeyPressed){
@@ -107,13 +109,13 @@ int main()
             
         }
 
-        // clear the window with black color
+        //Clear the window with black color
         window.clear();
         window.draw(bgSprite);
     
 
-// set the shape color to blue
-circle.setFillColor(sf::Color(255,0,0));
+        //Set the shape color to blue
+        circle.setFillColor(sf::Color(255,0,0));
         myPipes[0].recTOP.setFillColor(sf::Color(70,130,180));
         myPipes[0].recBOT.setFillColor(sf::Color(70,130,180));
         myPipes[1].recTOP.setFillColor(sf::Color(250,0,0));
@@ -123,7 +125,6 @@ circle.setFillColor(sf::Color(255,0,0));
         myPipes[3].recTOP.setFillColor(sf::Color(153,50,204));
         myPipes[3].recBOT.setFillColor(sf::Color(153,50,204));
       
-
         circle.setPosition(760.f, bird.posY);
         myPipes[0].position();
         myPipes[1].position();
@@ -136,19 +137,19 @@ circle.setFillColor(sf::Color(255,0,0));
         myPipes[3].Draw(window);
         window.draw(circle);
     
-    // end the current frame
+        //End the current frame
         
-    
         if(circle.getGlobalBounds().intersects(myPipes[score%4].recTOP.getGlobalBounds()) || circle.getGlobalBounds().intersects(myPipes[score%4].recBOT.getGlobalBounds())){
                 collision = true;
                 gameover = true;
-            
             } else {
                 collision = false;
             }
+        
         if (bird.posY >= 1110){
             gameover = true;
         }
+        
         if (!start){
             if (bird.posY > 590.f){
                 bird.moveY(1);
@@ -157,16 +158,17 @@ circle.setFillColor(sf::Color(255,0,0));
             }
         } else if(gameover){
             bird.moveY(-1);
-            text.setString(to_string(score));
-            window.draw(text);
+            text1.setString(to_string(score));
+            window.draw(text1);
+            window.draw(text2);
         } else if(!pause){
             bird.moveY(-1); //Update circle position
             myPipes[0].move(-7);
             myPipes[1].move(-7);
             myPipes[2].move(-7);
             myPipes[3].move(-7);
-            text.setString(to_string(score));
-            window.draw(text);
+            text1.setString(to_string(score));
+            window.draw(text1);
         }
 
         if(myPipes[index%4].posX < -600){
@@ -178,10 +180,8 @@ circle.setFillColor(sf::Color(255,0,0));
         if(myPipes[score%4].posX < 495){
             score++;
         }
- window.display();
+        window.display();
     }
   
-        
-   
     return 0;
 }
