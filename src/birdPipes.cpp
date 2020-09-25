@@ -127,12 +127,12 @@ int main()
         }
       
         // Drawing and updating position of bird and pipes
-        bird.position();
-        bird.Draw(window);
         for (int i = 0; i < myPipes.size(); i++) {
             myPipes[i].position();
             myPipes[i].Draw(window);
         }
+        bird.position();
+        bird.Draw(window);
         
         //Checking for collision between objects
         if(bird.birdie.getGlobalBounds().intersects(myPipes[score%4].recTOP.getGlobalBounds()) || bird.birdie.getGlobalBounds().intersects(myPipes[score%4].recBOT.getGlobalBounds())){
