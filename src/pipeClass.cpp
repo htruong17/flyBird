@@ -10,12 +10,9 @@
 // Pip constructor
 myPipe::myPipe(float x){
     posX = x;
-    posY = -(rand()%300) - 50;
-}
-
-void myPipe::create(){
-    sf::RectangleShape rectangleTOP(sf::Vector2f(100,800));
-    sf::RectangleShape rectangleBOT(sf::Vector2f(100,800));
+    posY = -(rand()%700) - 50;
+    sf::RectangleShape rectangleTOP(sf::Vector2f(200,800));
+    sf::RectangleShape rectangleBOT(sf::Vector2f(200,800));
     recTOP = rectangleTOP;
     recBOT = rectangleBOT;
 }

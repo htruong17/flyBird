@@ -8,22 +8,22 @@ int main()
 {
     srand(time(nullptr));
     
+    bool collision = false;
+    bool pause = false;
+    bool firstPipe = false;
+    bool gameover = false;
+    bool start = false;
+    
     // Create Bird Constructor
     vector<myPipe> myPipes;
     myPipes.push_back(myPipe(1500.f));
-    myPipes.push_back(myPipe(2100.f));
-    myPipes.push_back(myPipe(2700.f));
-    myPipes.push_back(myPipe(3300.f));
+    myPipes.push_back(myPipe(2300.f));
+    myPipes.push_back(myPipe(3100.f));
+    myPipes.push_back(myPipe(3900.f));
     
-    myBird bird(700.f, 360.f);
+    myBird bird(600.f, 600.f);
     
-    bool collision = false;
-    bool pause = false;
-    sf::CircleShape circle(20.f);
-    myPipes[0].create();
-    myPipes[1].create();
-    myPipes[2].create();
-    myPipes[3].create();
+    sf::CircleShape circle(40.f);
     
     //random select background and sound
     string randomBG = to_string(rand()%5 +1) + ".png";
@@ -73,15 +73,26 @@ int main()
                 window.close();
             else if(event.type == sf::Event::KeyPressed){
                 if(event.key.code == sf::Keyboard::Up)
-                //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                 {
-                    cout << "Up" << endl;
-                    bird.jump(.45);
-                    birdSound.play();
-                }
-                else if (event.key.code == sf::Keyboard::Space){
+                    if(!gameover){
+                        bird.jump(.45);
+                        start = true;
+                    } else{
+                        myPipes[0] = myPipe(1500.f);
+                        myPipes[1] = myPipe(2300.f);
+                        myPipes[2] = myPipe(3100.f);
+                        myPipes[3] = myPipe(3900.f);
+                        bird = myBird(600.f, 600.f);
+                        gameover = false;
+                        start = false;
+                        firstPipe = false;
+                        pause = false;
+                    }
+                } else if (event.key.code == sf::Keyboard::Space){
                 cout << "Pause" << endl;
-                    pause = !pause;
+                    if(start){
+                        pause = !pause;
+                    }
                 }
             }
             
@@ -108,11 +119,13 @@ circle.setFillColor(sf::Color(255,0,0));
             myPipes[3].recBOT.setFillColor(sf::Color(153,50,204));
         }
 //circle.setOutlineThickness(10.f);
-        circle.setPosition(780.f, bird.posY);
+        circle.setPosition(700.f, bird.posY);
         myPipes[0].position();
         myPipes[1].position();
         myPipes[2].position();
         myPipes[3].position();
+//        if (firstPipe)
+//               {myPipes[0].Draw(window);}
         myPipes[0].Draw(window);
         myPipes[1].Draw(window);
         myPipes[2].Draw(window);
@@ -122,52 +135,40 @@ circle.setFillColor(sf::Color(255,0,0));
     // end the current frame
         window.display();
     
-        if(circle.getGlobalBounds().intersects(myPipes[0].recTOP.getGlobalBounds()) || circle.getGlobalBounds().intersects(myPipes[0].recBOT.getGlobalBounds()) || circle.getGlobalBounds().intersects(myPipes[1].recTOP.getGlobalBounds()) || circle.getGlobalBounds().intersects(myPipes[1].recBOT.getGlobalBounds())){
-            collision = true;
-        } else {
-            collision = false;
-        }
+        if(circle.getGlobalBounds().intersects(myPipes[1].recTOP.getGlobalBounds()) || circle.getGlobalBounds().intersects(myPipes[1].recBOT.getGlobalBounds())){
+                collision = true;
+            gameover = true;
+            
+            } else {
+                collision = false;
+            }
         
-       
-        if(!pause){
+        if (!start){
+            if (bird.posY > 590.f){
+                bird.moveY(0.0008);
+            } else if (bird.posY <= 590.f){
+                bird.moveY(-0.0008);
+            }
+        } else if(gameover){
+        bird.moveY(-0.0008);
+        } else if(!pause){
             bird.moveY(-0.0008); //Update circle position
             myPipes[0].move(-.2);
             myPipes[1].move(-.2);
             myPipes[2].move(-.2);
             myPipes[3].move(-.2);
         }
+
         
         
-        if(myPipes[0].posX < -100){
+        if(myPipes[0].posX < -600){
             
-            myPipes.push_back(myPipe(myPipes[3].posX+600.f));
-            myPipes[4].create();
+            myPipes.push_back(myPipe(myPipes[3].posX+800.f));
             myPipes.erase(myPipes.begin());
             score += 1;
-            
-           // myPipes[0] = myPipe(myPipes[3].posX+300.f);
-           //myPipes[0].create();
-        }
-        
-        if(collision) {
-            bird.posY = 1160;
-//            cout << myPipes[0].posX << endl;
-//            cout << bird.posX << endl;
-            pause = !pause;
-            
         }
         window.draw(text);
-        
-//        } else if(myPipes[1].posX < -100){
-//            myPipes[1] = myPipe(myPipes[0].posX+300.f);
-//            myPipes[1].create();
-//        } else if(myPipes[2].posX < -100){
-//            myPipes[2] = myPipe(myPipes[1].posX+300.f);
-//            myPipes[2].create();
-//        } else if(myPipes[3].posX < -100){
-//            myPipes[3] = myPipe(myPipes[2].posX+300.f);
-//            myPipes[3].create();
-//        }
+
     }
    
         

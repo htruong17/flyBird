@@ -21,7 +21,6 @@ public:
     myPipe(float x);
     
     // Declare method to move pip horizontally
-    void create();
     void position();
     void move(const float& accel);
     void Draw(sf::RenderWindow& window);
