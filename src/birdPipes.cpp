@@ -58,8 +58,9 @@ int main()
     // create the window
     //sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Playground");
   
-    //window.setFramerateLimit(60);
+    window.setFramerateLimit(60);
     window.setKeyRepeatEnabled(false);
+    
     
     // run the program as long as the window is open
     while (window.isOpen())
@@ -75,7 +76,7 @@ int main()
                 if(event.key.code == sf::Keyboard::Up)
                 {
                     if(!gameover){
-                        bird.jump(.45);
+                        bird.jump(20);
                         birdSound.play();
                         start = true;
                     } else{
@@ -143,21 +144,23 @@ circle.setFillColor(sf::Color(255,0,0));
             } else {
                 collision = false;
             }
-        
+        if (bird.posY >= 1110){
+            gameover = true;
+        }
         if (!start){
             if (bird.posY > 590.f){
-                bird.moveY(0.0008);
+                bird.moveY(1);
             } else if (bird.posY <= 590.f){
-                bird.moveY(-0.0008);
+                bird.moveY(-1);
             }
         } else if(gameover){
-            bird.moveY(-0.0008);
+            bird.moveY(-1);
         } else if(!pause){
-            bird.moveY(-0.0008); //Update circle position
-            myPipes[0].move(-.2);
-            myPipes[1].move(-.2);
-            myPipes[2].move(-.2);
-            myPipes[3].move(-.2);
+            bird.moveY(-1); //Update circle position
+            myPipes[0].move(-8);
+            myPipes[1].move(-8);
+            myPipes[2].move(-8);
+            myPipes[3].move(-8);
         }
 
         if(myPipes[0].posX < -600){
