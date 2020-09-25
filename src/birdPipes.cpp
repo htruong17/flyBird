@@ -1,14 +1,11 @@
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #include "birdClass.hpp"
 #include "pipeClass.hpp"
+#include <SFML/Audio.hpp>
 using namespace std;
 int main()
 {
     srand(time(nullptr));
     
-    bool collision = false;
     bool pause = false;
     bool firstPipe = false;
     bool gameover = false;
@@ -41,14 +38,14 @@ int main()
     sf::Sprite bgSprite;
     bgSprite.setTexture(bgTex);
     bgSprite.setScale(float (window.getSize().x)/(bgTex.getSize().x), float (window.getSize().y)/(bgTex.getSize().y));
-    
+
     //Create sound
     sf::SoundBuffer buffer;
     buffer.loadFromFile(randomS);
     sf::Sound birdSound;
     birdSound.setBuffer(buffer);
     birdSound.setVolume(20);
-    
+
     //Create score
     int score = 0;
     sf::Font font;
@@ -59,7 +56,7 @@ int main()
     text1.setFillColor(sf::Color::White);
     text1.setStyle(sf::Text::Bold);
     text1.setPosition(760.f, 100.f);
-    
+
     text2.setFont(font);
     text2.setString("GAME OVER");
     text2.setCharacterSize(100);
@@ -97,7 +94,7 @@ int main()
                         firstPipe = false;
                         pause = false;
                         index = 0;
-                        score = 0;
+                        score = 0; 
                     }
                 } else if (event.key.code == sf::Keyboard::Space){
                 cout << "Pause" << endl;
@@ -116,34 +113,32 @@ int main()
 
         //Set the shape color to blue
         circle.setFillColor(sf::Color(255,0,0));
-        myPipes[0].recTOP.setFillColor(sf::Color(70,130,180));
-        myPipes[0].recBOT.setFillColor(sf::Color(70,130,180));
-        myPipes[1].recTOP.setFillColor(sf::Color(250,0,0));
-        myPipes[1].recBOT.setFillColor(sf::Color(250,0,0));
-        myPipes[2].recTOP.setFillColor(sf::Color(50,205,50));
-        myPipes[2].recBOT.setFillColor(sf::Color(50,205,50));
-        myPipes[3].recTOP.setFillColor(sf::Color(153,50,204));
-        myPipes[3].recBOT.setFillColor(sf::Color(153,50,204));
+        for (int i = 0; i < myPipes.size(); i++) {
+            if (randomBG == "1.png") {
+                myPipes[i].color(0, 153, 0);
+            }
+            else if (randomBG == "2.png") {
+                myPipes[i].color(192, 192, 192);
+            }
+            else if (randomBG == "3.png") {
+                myPipes[i].color(204, 102, 0);
+            }
+        }
       
+        
         circle.setPosition(760.f, bird.posY);
-        myPipes[0].position();
-        myPipes[1].position();
-        myPipes[2].position();
-        myPipes[3].position();
-
-        myPipes[0].Draw(window);
-        myPipes[1].Draw(window);
-        myPipes[2].Draw(window);
-        myPipes[3].Draw(window);
+        
+        for (int i = 0; i < myPipes.size(); i++) {
+            myPipes[i].position();
+            myPipes[i].Draw(window);
+        }
+        
         window.draw(circle);
     
         //End the current frame
         
         if(circle.getGlobalBounds().intersects(myPipes[score%4].recTOP.getGlobalBounds()) || circle.getGlobalBounds().intersects(myPipes[score%4].recBOT.getGlobalBounds())){
-                collision = true;
                 gameover = true;
-            } else {
-                collision = false;
             }
         
         if (bird.posY >= 1110){
@@ -163,18 +158,18 @@ int main()
             window.draw(text2);
         } else if(!pause){
             bird.moveY(-1); //Update circle position
-            myPipes[0].move(-7);
-            myPipes[1].move(-7);
-            myPipes[2].move(-7);
-            myPipes[3].move(-7);
+            for (int i = 0; i < myPipes.size(); i++) {
+                myPipes[i].move(-7);
+            }
+
             text1.setString(to_string(score));
             window.draw(text1);
         }
 
         if(myPipes[index%4].posX < -600){
             firstPipe = true;
-            myPipes[index%4] = myPipe(myPipes[(3+index)%4].posX+800.f);
-            index ++;
+            myPipes[index%4] = myPipe(myPipes[(3 + index)%4].posX + 800.f);
+            index++;
         }
         
         if(myPipes[score%4].posX < 495){

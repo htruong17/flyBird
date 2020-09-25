@@ -4,7 +4,6 @@
 //
 //  Created by Harold Truong on 9/22/20.
 //
-#include <SFML/Graphics.hpp>
 #include "pipeClass.hpp"
 
 // Pip constructor
@@ -31,4 +30,8 @@ void myPipe::Draw(sf::RenderWindow& window){
     window.draw(recBOT);
 }
 
+void myPipe::color(int a, int b, int c) {
+    recTOP.setFillColor(sf::Color(a, b, c));
+    recBOT.setFillColor(sf::Color(a, b, c));
+}
 
