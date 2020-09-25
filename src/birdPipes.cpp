@@ -26,8 +26,8 @@ int main()
     sf::CircleShape circle(40.f);
     
     //random select background and sound
-    string randomBG = to_string(rand()%5 +1) + ".png";
-    string randomS = to_string(rand()%5 +1) + ".wav";
+    string randomBG = to_string(rand()%3 +1) + ".png";
+    string randomS = to_string(rand()%3 +1) + ".wav";
     //cout << randomBG << endl;
     
     // create the window
@@ -76,6 +76,7 @@ int main()
                 {
                     if(!gameover){
                         bird.jump(.45);
+                        birdSound.play();
                         start = true;
                     } else{
                         myPipes[0] = myPipe(1500.f);
@@ -124,9 +125,9 @@ circle.setFillColor(sf::Color(255,0,0));
         myPipes[1].position();
         myPipes[2].position();
         myPipes[3].position();
-//        if (firstPipe)
-//               {myPipes[0].Draw(window);}
-        myPipes[0].Draw(window);
+        if (firstPipe)
+            {myPipes[0].Draw(window);}
+        //myPipes[0].Draw(window);
         myPipes[1].Draw(window);
         myPipes[2].Draw(window);
         myPipes[3].Draw(window);
@@ -137,7 +138,7 @@ circle.setFillColor(sf::Color(255,0,0));
     
         if(circle.getGlobalBounds().intersects(myPipes[1].recTOP.getGlobalBounds()) || circle.getGlobalBounds().intersects(myPipes[1].recBOT.getGlobalBounds())){
                 collision = true;
-            gameover = true;
+                gameover = true;
             
             } else {
                 collision = false;
@@ -150,7 +151,7 @@ circle.setFillColor(sf::Color(255,0,0));
                 bird.moveY(-0.0008);
             }
         } else if(gameover){
-        bird.moveY(-0.0008);
+            bird.moveY(-0.0008);
         } else if(!pause){
             bird.moveY(-0.0008); //Update circle position
             myPipes[0].move(-.2);
@@ -159,10 +160,8 @@ circle.setFillColor(sf::Color(255,0,0));
             myPipes[3].move(-.2);
         }
 
-        
-        
         if(myPipes[0].posX < -600){
-            
+            firstPipe = true;
             myPipes.push_back(myPipe(myPipes[3].posX+800.f));
             myPipes.erase(myPipes.begin());
             score += 1;
