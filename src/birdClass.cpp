@@ -19,8 +19,8 @@ void myBird::jump(const float& speed){
 void myBird::moveY(const float& accel){ // Drop or Gravity
     velocity -= accel;
     posY += velocity;
-    if (posY > 580){
-        posY = 580;
+    if (posY > 1160){
+        posY = 1160;
         velocity = 0;
     } else if (posY < 0){
         posY = 0;

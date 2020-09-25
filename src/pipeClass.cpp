@@ -14,15 +14,15 @@ myPipe::myPipe(float x){
 }
 
 void myPipe::create(){
-    sf::RectangleShape rectangleTOP(sf::Vector2f(50,400));
-    sf::RectangleShape rectangleBOT(sf::Vector2f(50,400));
+    sf::RectangleShape rectangleTOP(sf::Vector2f(100,800));
+    sf::RectangleShape rectangleBOT(sf::Vector2f(100,800));
     recTOP = rectangleTOP;
     recBOT = rectangleBOT;
 }
 
 void myPipe::position(){
     recTOP.setPosition(posX, posY);
-    recBOT.setPosition(posX, posY+600);
+    recBOT.setPosition(posX, posY+1100);
 }
 
 void myPipe::move(const float& velocity){

@@ -11,15 +11,15 @@ int main()
     // Create Bird Constructor
     vector<myPipe> myPipes;
     myPipes.push_back(myPipe(1500.f));
-    myPipes.push_back(myPipe(1800.f));
     myPipes.push_back(myPipe(2100.f));
-    myPipes.push_back(myPipe(2400.f));
+    myPipes.push_back(myPipe(2700.f));
+    myPipes.push_back(myPipe(3300.f));
     
-    myBird bird(350.f, 180.f);
+    myBird bird(700.f, 360.f);
     
     bool collision = false;
     bool pause = false;
-    sf::CircleShape circle(10.f);
+    sf::CircleShape circle(20.f);
     myPipes[0].create();
     myPipes[1].create();
     myPipes[2].create();
@@ -31,7 +31,7 @@ int main()
     //cout << randomBG << endl;
     
     // create the window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Playground");
+    sf::RenderWindow window(sf::VideoMode(1600, 1200), "SFML Playground");
     
     //Create background
     sf::Texture bgTex;
@@ -52,7 +52,7 @@ int main()
     text.setString(to_string(score));
     text.setCharacterSize(50);
     text.setFillColor(sf::Color::Red);
-    text.setPosition(350.f, 180.f);
+    text.setPosition(700.f, 360.f);
     
      
     // create the window
@@ -108,7 +108,7 @@ circle.setFillColor(sf::Color(255,0,0));
             myPipes[3].recBOT.setFillColor(sf::Color(153,50,204));
         }
 //circle.setOutlineThickness(10.f);
-        circle.setPosition(390.f, bird.posY);
+        circle.setPosition(780.f, bird.posY);
         myPipes[0].position();
         myPipes[1].position();
         myPipes[2].position();
@@ -140,7 +140,7 @@ circle.setFillColor(sf::Color(255,0,0));
         
         if(myPipes[0].posX < -100){
             
-            myPipes.push_back(myPipe(myPipes[3].posX+300.f));
+            myPipes.push_back(myPipe(myPipes[3].posX+600.f));
             myPipes[4].create();
             myPipes.erase(myPipes.begin());
             score += 1;
@@ -150,7 +150,7 @@ circle.setFillColor(sf::Color(255,0,0));
         }
         
         if(collision) {
-            bird.posY = 580;
+            bird.posY = 1160;
 //            cout << myPipes[0].posX << endl;
 //            cout << bird.posX << endl;
             pause = !pause;
