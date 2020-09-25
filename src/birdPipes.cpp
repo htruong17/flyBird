@@ -7,21 +7,19 @@ int main()
     srand(time(nullptr));
     
     bool pause = false;
-    bool firstPipe = false;
     bool gameover = false;
-    bool start = false;
+    bool start = false; //Gameplay hasn't started. Bird in hover phase
+    int index = 0; //Index of the pipe for infinite looping
     
-    int index = 0;
-    //Create Bird Constructor
+    //Create Pipe Constructor into vector
     vector<myPipe> myPipes;
     myPipes.push_back(myPipe(2100.f));
     myPipes.push_back(myPipe(2900.f));
     myPipes.push_back(myPipe(3700.f));
     myPipes.push_back(myPipe(4500.f));
     
+    //Constructing bird
     myBird bird(760.f, 600.f);
-    
-    sf::CircleShape circle(40.f);
     
     //Random select background and sound
     string randomBG = to_string(rand()%3 +1) + ".png";
@@ -29,6 +27,8 @@ int main()
     
     //Create the window
     sf::RenderWindow window(sf::VideoMode(1600, 1200), "SFML Playground");
+    
+    //Fixed timerate and unabling keyboard repeat
     window.setFramerateLimit(60);
     window.setKeyRepeatEnabled(false);
     
@@ -46,7 +46,7 @@ int main()
     birdSound.setBuffer(buffer);
     birdSound.setVolume(20);
 
-    //Create score
+    //Create score display
     int score = 0;
     sf::Font font;
     font.loadFromFile("arial.ttf");
@@ -57,6 +57,7 @@ int main()
     text1.setStyle(sf::Text::Bold);
     text1.setPosition(760.f, 100.f);
 
+    //Create game over message
     text2.setFont(font);
     text2.setString("GAME OVER");
     text2.setCharacterSize(100);
@@ -77,13 +78,16 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
             else if(event.type == sf::Event::KeyPressed){
-                if(event.key.code == sf::Keyboard::Up)
+                if(event.key.code == sf::Keyboard::Up) // When pressing the up key
                 {
+                    //If you're still alive
                     if(!gameover){
-                        bird.jump(19);
-                        birdSound.play();
-                        start = true;
-                    } else{
+                        bird.jump(19); //Makes bird fly or jump
+                        start = true; //Kicks bird out of floating phase when first initializing game
+                        if (!pause){
+                            birdSound.play(); //Plays sound when flying/jumping
+                        }
+                    } else{ //Press up when dead to restart game
                         myPipes[0] = myPipe(2100.f);
                         myPipes[1] = myPipe(2900.f);
                         myPipes[2] = myPipe(3700.f);
@@ -91,28 +95,25 @@ int main()
                         bird = myBird(760.f, 600.f);
                         gameover = false;
                         start = false;
-                        firstPipe = false;
                         pause = false;
                         index = 0;
                         score = 0; 
                     }
-                } else if (event.key.code == sf::Keyboard::Space){
-                cout << "Pause" << endl;
+                } else if (event.key.code == sf::Keyboard::Space){ // When pressing the space key
                     if(start){
-                        pause = !pause;
+                        pause = !pause; //Turns pause on and off
                     }
                 }
             }
-            
         }
 
-        //Clear the window with black color
+        //Clear the window and draws background
         window.clear();
         window.draw(bgSprite);
     
 
-        //Set the shape color to blue
-        circle.setFillColor(sf::Color(255,0,0));
+        //Set the bird color and pipe colors accordingly to background loaded
+        bird.color(255, 0, 0);
         for (int i = 0; i < myPipes.size(); i++) {
             if (randomBG == "1.png") {
                 myPipes[i].color(0, 153, 0);
@@ -125,53 +126,52 @@ int main()
             }
         }
       
-        
-        circle.setPosition(760.f, bird.posY);
-        
+        // Drawing and updating position of bird and pipes
+        bird.position();
+        bird.Draw(window);
         for (int i = 0; i < myPipes.size(); i++) {
             myPipes[i].position();
             myPipes[i].Draw(window);
         }
         
-        window.draw(circle);
-    
-        //End the current frame
-        
-        if(circle.getGlobalBounds().intersects(myPipes[score%4].recTOP.getGlobalBounds()) || circle.getGlobalBounds().intersects(myPipes[score%4].recBOT.getGlobalBounds())){
-                gameover = true;
+        //Checking for collision between objects
+        if(bird.birdie.getGlobalBounds().intersects(myPipes[score%4].recTOP.getGlobalBounds()) || bird.birdie.getGlobalBounds().intersects(myPipes[score%4].recBOT.getGlobalBounds())){
+                gameover = true; //Ends game if collision detected
             }
         
+        //Game over if bird touches the ground
         if (bird.posY >= 1110){
             gameover = true;
         }
         
-        if (!start){
+        if (!start){ //Gameplay hasn't start so the bird is just hovering up and down
             if (bird.posY > 590.f){
                 bird.moveY(1);
             } else if (bird.posY <= 590.f){
                 bird.moveY(-1);
             }
-        } else if(gameover){
-            bird.moveY(-1);
+        } else if(gameover){ //If gameover...
+            bird.moveY(-1); //Drop the dead bird down.
             text1.setString(to_string(score));
-            window.draw(text1);
-            window.draw(text2);
-        } else if(!pause){
-            bird.moveY(-1); //Update circle position
+            window.draw(text1); //Display score
+            window.draw(text2); //Display game over message
+        } else if(!pause){ //If pause not active, then move the pipes and bird
+            bird.moveY(-1);
             for (int i = 0; i < myPipes.size(); i++) {
                 myPipes[i].move(-7);
             }
-
+            //Display and updating score during game play
             text1.setString(to_string(score));
             window.draw(text1);
         }
 
+        // Pipe loop - create new pipe when one leaves the screen
         if(myPipes[index%4].posX < -600){
-            firstPipe = true;
             myPipes[index%4] = myPipe(myPipes[(3 + index)%4].posX + 800.f);
             index++;
         }
         
+        // Adds to score when pipe passes the position of the bird
         if(myPipes[score%4].posX < 495){
             score++;
         }

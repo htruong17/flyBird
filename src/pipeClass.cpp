@@ -9,7 +9,7 @@
 // Pip constructor
 myPipe::myPipe(float x){
     posX = x;
-    posY = (-(rand()%8) - 2) * 100;
+    posY = (-(rand()%8) - 2) * 100; //Randomized for obstacle course
     sf::RectangleShape rectangleTOP(sf::Vector2f(200, 1000));
     sf::RectangleShape rectangleBOT(sf::Vector2f(200, 1000));
     recTOP = rectangleTOP;
